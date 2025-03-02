@@ -1,0 +1,31 @@
+/**
+ * A 16-bit counter.
+ * if      reset(t): out(t+1) = 0
+ * else if load(t):  out(t+1) = in(t)
+ * else if inc(t):   out(t+1) = out(t) + 1
+ * else              out(t+1) = out(t)
+ */
+
+ /**
+ * 8-way 16-bit multiplexor:
+ * out = a if sel = 000
+ *       b if sel = 001
+ *       c if sel = 010
+ *       d if sel = 011
+ *       e if sel = 100
+ *       f if sel = 101
+ *       g if sel = 110
+ *       h if sel = 111
+ */
+CHIP PC {
+    IN in[16], reset, load, inc;
+    OUT out[16];
+    
+    PARTS:
+    //// Replace this comment with your code.
+    Inc16(in=p, out= temp);
+    
+    Mux8Way16(a=p , b= temp, c=in , d=in , e=false , f= false, g=false , h= false, sel[0]= inc, sel[1]=load, sel[2]=reset, out= temp1);
+    
+    Register(in= temp1, load=true , out= p, out=out);
+}
